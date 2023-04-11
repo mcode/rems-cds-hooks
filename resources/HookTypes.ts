@@ -1,4 +1,4 @@
-import { Bundle, FhirResource } from "fhir/r4";
+import { Bundle, FhirResource, Patient, Practitioner } from "fhir/r4";
 
 export enum SupportedHooks {
   ORDER_SIGN = "order-sign",
@@ -17,7 +17,12 @@ export interface HookContext {
 }
 
 export interface HookPrefetch {
-  [key: string]: FhirResource | object | undefined;
+  [key: string]: FhirResource | undefined;
+}
+
+export interface OrderSignPrefetch extends HookPrefetch {
+  practitioner?: Practitioner;
+  patient?: Patient;
 }
 export interface Hook {
   hook: SupportedHooks;
@@ -39,6 +44,7 @@ export interface OrderSignContext extends HookContext {
 export interface OrderSignHook extends Hook {
   hook: SupportedHooks.ORDER_SIGN;
   context: OrderSignContext;
+  prefetch?: OrderSignPrefetch;
 }
 
 export interface Coding {
