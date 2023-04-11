@@ -1,4 +1,4 @@
-import { SupportedHooks } from "./HookTypes";
+import { SupportedHooks } from './HookTypes';
 
 export interface CdsService {
   id: string;

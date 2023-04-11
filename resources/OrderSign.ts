@@ -1,11 +1,6 @@
-import { Bundle } from "fhir/r4";
-import CdsHook from "./CdsHook";
-import {
-  Hook,
-  OrderSignContext,
-  OrderSignHook,
-  SupportedHooks,
-} from "./HookTypes";
+import { Bundle } from 'fhir/r4';
+import CdsHook from './CdsHook';
+import { Hook, OrderSignContext, OrderSignHook, SupportedHooks } from './HookTypes';
 
 export default class OrderSign extends CdsHook {
   patientId: string;
@@ -24,14 +19,14 @@ export default class OrderSign extends CdsHook {
       hook: this.hookType,
       hookInstance: this.hookInstance,
       context: this.generateContext(),
-      prefetch: {},
+      prefetch: {}
     };
   }
   generateContext(): OrderSignContext {
     return {
       userId: this.userId,
       patientId: this.patientId,
-      draftOrders: this.draftOrders,
+      draftOrders: this.draftOrders
     };
   }
 }

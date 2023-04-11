@@ -1,5 +1,5 @@
-import { Hook, HookContext, SupportedHooks } from "./HookTypes";
-import { v4 } from "uuid";
+import { Hook, HookContext, SupportedHooks } from './HookTypes';
+import { v4 } from 'uuid';
 export default abstract class CdsHook {
   hookType: SupportedHooks;
   hookInstance: string;
