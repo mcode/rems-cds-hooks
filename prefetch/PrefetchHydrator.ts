@@ -50,7 +50,7 @@ function replaceTokens(str: string, json: Hook): string {
 }
 function resolveToken(token: string, callback: (token: string) => Promise<any>, hook: Hook) {
   const fulfilledToken = replaceTokens(token, hook);
-  return callback(fulfilledToken)
+  return callback(fulfilledToken);
 }
 function hydrate(callback: (token: string) => Promise<any>, template: ServicePrefetch, hook: Hook) {
   // Generally the EHR should define the prefetch requests it will/won't
