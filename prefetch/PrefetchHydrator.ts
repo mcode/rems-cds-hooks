@@ -48,13 +48,11 @@ function replaceTokens(str: string, json: Hook): string {
   // Return the modified string
   return str;
 }
-function resolveToken(token: string, client: Client, hook: Hook) {
+function resolveToken(token: string, callback: (token: string) => Promise<any>, hook: Hook) {
   const fulfilledToken = replaceTokens(token, hook);
-  return client.request(fulfilledToken).then(e => {
-    return e;
-  });
+  return callback(fulfilledToken)
 }
-function hydrate(client: Client, template: ServicePrefetch, hook: Hook) {
+function hydrate(callback: (token: string) => Promise<any>, template: ServicePrefetch, hook: Hook) {
   // Generally the EHR should define the prefetch requests it will/won't
   // fulfill, but in this case we can just attempt to fill everything
   // we can.
@@ -65,7 +63,7 @@ function hydrate(client: Client, template: ServicePrefetch, hook: Hook) {
   const promises = Object.keys(template).map(key => {
     if (!Object.prototype.hasOwnProperty.call(prefetch, key)) {
       // prefetch was not fulfilled
-      return resolveToken(template[key], client, hook).then((data: FhirResource) => {
+      return resolveToken(template[key], callback, hook).then((data: FhirResource) => {
         Object.assign(prefetch, { [key]: data });
       });
     } else {
