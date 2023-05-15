@@ -1,6 +1,6 @@
 import { Bundle } from 'fhir/r4';
 import CdsHook from './CdsHook';
-import { Hook, OrderSignContext, OrderSignHook, SupportedHooks } from './HookTypes';
+import { OrderSignContext, OrderSignHook, SupportedHooks } from './HookTypes';
 
 export default class OrderSign extends CdsHook {
   patientId: string;
