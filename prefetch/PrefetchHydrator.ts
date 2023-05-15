@@ -1,6 +1,5 @@
 import { Hook, HookPrefetch } from '../resources/HookTypes';
 import { ServicePrefetch } from '../resources/CdsService';
-import Client from 'fhirclient/lib/Client';
 import { FhirResource } from 'fhir/r4';
 function jsonPath(json: any, path: string) {
   // Use a regular expression to find array accessors in the form of "[i]"
