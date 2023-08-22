@@ -1,7 +1,8 @@
 import { Bundle, FhirResource, Patient, Practitioner } from 'fhir/r4';
 
 export enum SupportedHooks {
-  ORDER_SIGN = 'order-sign'
+  ORDER_SIGN = 'order-sign',
+  ORDER_SELECT = 'order-select'
 }
 
 export interface FhirAuthorization {
@@ -13,7 +14,7 @@ export interface FhirAuthorization {
 }
 
 export interface HookContext {
-  [key: string]: string | Bundle | undefined;
+  [key: string]: string | string[] | Bundle | undefined;
 }
 
 export interface HookPrefetch {
@@ -21,6 +22,11 @@ export interface HookPrefetch {
 }
 
 export interface OrderSignPrefetch extends HookPrefetch {
+  practitioner?: Practitioner;
+  patient?: Patient;
+}
+
+export interface OrderSelectPrefetch extends HookPrefetch {
   practitioner?: Practitioner;
   patient?: Patient;
 }
@@ -40,11 +46,24 @@ export interface OrderSignContext extends HookContext {
   encounterId?: string;
   draftOrders: Bundle;
 }
+
+// https://cds-hooks.org/hooks/order-select/#context
+export interface OrderSelectContext extends HookContext {
+  userId: string;
+  patientId: string;
+  encounterId?: string;
+  selections: string[];
+  draftOrders: Bundle;
+}
 // https://cds-hooks.hl7.org/1.0/#calling-a-cds-service
 export interface OrderSignHook extends Hook {
-  hook: SupportedHooks.ORDER_SIGN;
   context: OrderSignContext;
   prefetch?: OrderSignPrefetch;
+}
+
+export interface OrderSelectHook extends Hook {
+  context: OrderSelectContext;
+  prefetch?: OrderSelectPrefetch;
 }
 
 export interface Coding {
@@ -263,3 +282,7 @@ export interface Card {
    */
   links?: Link[];
 }
+
+export interface TypedRequestBody extends Express.Request {
+  body: Hook;
+}  
