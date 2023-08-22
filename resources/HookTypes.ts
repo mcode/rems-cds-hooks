@@ -285,4 +285,4 @@ export interface Card {
 
 export interface TypedRequestBody extends Express.Request {
   body: Hook;
-}  
+}
