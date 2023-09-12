@@ -1,4 +1,4 @@
-import { Hook, HookPrefetch } from '../resources/HookTypes';
+import { Hook, HookPrefetch, TypedRequestBody } from '../resources/HookTypes';
 import { ServicePrefetch } from '../resources/CdsService';
 import { FhirResource } from 'fhir/r4';
 function jsonPath(json: any, path: string) {
@@ -47,11 +47,19 @@ function replaceTokens(str: string, json: Hook): string {
   // Return the modified string
   return str;
 }
-function resolveToken(token: string, callback: (token: string) => Promise<any>, hook: Hook) {
+function resolveToken(
+  token: string,
+  callback: (token: string, req: TypedRequestBody) => Promise<any>,
+  hook: Hook
+) {
   const fulfilledToken = replaceTokens(token, hook);
-  return callback(fulfilledToken);
+  return callback(fulfilledToken, { body: hook });
 }
-function hydrate(callback: (token: string) => Promise<any>, template: ServicePrefetch, hook: Hook) {
+function hydrate(
+  callback: (token: string, req: TypedRequestBody) => Promise<any>,
+  template: ServicePrefetch,
+  hook: Hook
+) {
   // Generally the EHR should define the prefetch requests it will/won't
   // fulfill, but in this case we can just attempt to fill everything
   // we can.
