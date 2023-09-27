@@ -1,4 +1,3 @@
-import { Bundle } from 'fhir/r4';
 import CdsHook from './CdsHook';
 import { PatientViewContext, PatientViewHook, SupportedHooks } from './HookTypes';
 
