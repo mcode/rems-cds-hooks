@@ -6,7 +6,7 @@ export default class PatientView extends CdsHook {
   userId: string;
 
   constructor(patientId: string, userId: string) {
-    super(SupportedHooks.ORDER_SIGN);
+    super(SupportedHooks.PATIENT_VIEW);
     this.patientId = patientId;
     this.userId = userId;
   }
