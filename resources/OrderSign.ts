@@ -22,7 +22,7 @@ export default class OrderSign extends CdsHook {
       context: this.generateContext(),
       prefetch: {}
     };
-    if(client) {
+    if (client) {
       this.fillAuth(client, baseHook);
     }
 

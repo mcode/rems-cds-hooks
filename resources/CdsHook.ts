@@ -11,13 +11,15 @@ export default abstract class CdsHook {
   abstract generate(): Hook;
   abstract generateContext(): HookContext;
   fillAuth(client: Client, hook: Hook) {
-    if(client.state?.tokenResponse) {
+    if (client.state?.tokenResponse) {
       const tokenResponse = client.state.tokenResponse;
-      if(tokenResponse.access_token && 
-        tokenResponse.token_type && 
-        tokenResponse.expires_in && 
-        tokenResponse.scope && 
-        client.state.clientId){
+      if (
+        tokenResponse.access_token &&
+        tokenResponse.token_type &&
+        tokenResponse.expires_in &&
+        tokenResponse.scope &&
+        client.state.clientId
+      ) {
         hook.fhirAuthorization = {
           access_token: tokenResponse.access_token,
           token_type: tokenResponse.token_type,
