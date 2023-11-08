@@ -1,6 +1,7 @@
 import { Bundle } from 'fhir/r4';
 import CdsHook from './CdsHook';
 import { OrderSignContext, OrderSignHook, SupportedHooks } from './HookTypes';
+import Client from 'fhirclient/lib/Client';
 
 export default class OrderSign extends CdsHook {
   patientId: string;
@@ -14,13 +15,18 @@ export default class OrderSign extends CdsHook {
     this.draftOrders = draftOrders;
   }
 
-  generate(): OrderSignHook {
-    return {
+  generate(client?: Client): OrderSignHook {
+    const baseHook: OrderSignHook = {
       hook: this.hookType,
       hookInstance: this.hookInstance,
       context: this.generateContext(),
       prefetch: {}
     };
+    if(client) {
+      this.fillAuth(client, baseHook);
+    }
+
+    return baseHook;
   }
   generateContext(): OrderSignContext {
     return {

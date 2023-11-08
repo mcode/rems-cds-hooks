@@ -1,6 +1,7 @@
 import { Bundle } from 'fhir/r4';
 import CdsHook from './CdsHook';
 import { OrderSelectContext, OrderSelectHook, SupportedHooks } from './HookTypes';
+import Client from 'fhirclient/lib/Client';
 
 export default class OrderSelect extends CdsHook {
   patientId: string;
@@ -16,13 +17,18 @@ export default class OrderSelect extends CdsHook {
     this.selections = selections;
   }
 
-  generate(): OrderSelectHook {
-    return {
+  generate(client?: Client): OrderSelectHook {
+    const baseHook: OrderSelectHook = {
       hook: this.hookType,
       hookInstance: this.hookInstance,
       context: this.generateContext(),
       prefetch: {}
     };
+    if(client) {
+      this.fillAuth(client, baseHook);
+    }
+
+    return baseHook;
   }
   generateContext(): OrderSelectContext {
     return {

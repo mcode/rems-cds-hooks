@@ -8,7 +8,7 @@ export enum SupportedHooks {
 
 export interface FhirAuthorization {
   access_token: string;
-  token_type: 'Bearer';
+  token_type: 'Bearer' | 'bearer';
   expires_in: number;
   scope: string;
   subject: string;
