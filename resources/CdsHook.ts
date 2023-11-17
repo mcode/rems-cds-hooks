@@ -29,6 +29,7 @@ export default abstract class CdsHook {
         };
       }
     }
+    hook.fhirServer = new URL(client.state.serverUrl);
     return hook;
   }
 }
