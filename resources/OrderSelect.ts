@@ -10,7 +10,7 @@ export default class OrderSelect extends CdsHook {
   selections: string[];
 
   constructor(patientId: string, userId: string, draftOrders: Bundle, selections: string[]) {
-    super(SupportedHooks.ORDER_SIGN);
+    super(SupportedHooks.ORDER_SELECT);
     this.patientId = patientId;
     this.userId = userId;
     this.draftOrders = draftOrders;
