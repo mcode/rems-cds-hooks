@@ -1,6 +1,7 @@
 import { Hook, HookPrefetch, TypedRequestBody } from '../resources/HookTypes';
 import { ServicePrefetch } from '../resources/CdsService';
 import { FhirResource } from 'fhir/r4';
+
 function jsonPath(json: any, path: string) {
   // Use a regular expression to find array accessors in the form of "[i]"
   const arrayRegex = /\[(\d+)\]/g;
@@ -27,6 +28,7 @@ function jsonPath(json: any, path: string) {
     return obj[key];
   }, json);
 }
+
 function replaceTokens(str: string, json: Hook): string {
   // Use a regular expression to find tokens in the form of "{{token}}"
   const tokenRegex = /{{([\w.]+)}}/g;
@@ -47,6 +49,7 @@ function replaceTokens(str: string, json: Hook): string {
   // Return the modified string
   return str;
 }
+
 function resolveToken(
   token: string,
   callback: (token: string, req: TypedRequestBody) => Promise<any>,
@@ -55,6 +58,7 @@ function resolveToken(
   const fulfilledToken = replaceTokens(token, hook);
   return callback(fulfilledToken, { body: hook });
 }
+
 function hydrate(
   callback: (token: string, req: TypedRequestBody) => Promise<any>,
   template: ServicePrefetch,
