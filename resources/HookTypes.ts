@@ -16,6 +16,9 @@ export interface FhirAuthorization {
 
 export interface HookContext {
   [key: string]: string | string[] | Bundle | undefined;
+  userId: string;
+  patientId: string;
+  encounterId?: string;
 }
 
 export interface HookPrefetch {
@@ -49,26 +52,18 @@ export interface Hook {
 
 // https://cds-hooks.org/hooks/order-sign/#context
 export interface OrderSignContext extends HookContext {
-  userId: string;
-  patientId: string;
-  encounterId?: string;
   draftOrders: Bundle;
 }
 
 // https://cds-hooks.org/hooks/order-select/#context
 export interface OrderSelectContext extends HookContext {
-  userId: string;
-  patientId: string;
-  encounterId?: string;
   selections: string[];
   draftOrders: Bundle;
 }
 
 // https://cds-hooks.org/hooks/patient-view/#context
 export interface PatientViewContext extends HookContext {
-  userId: string;
-  patientId: string;
-  encounterId?: string;
+
 }
 
 // https://cds-hooks.hl7.org/1.0/#calling-a-cds-service
