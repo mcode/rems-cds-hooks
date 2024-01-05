@@ -62,9 +62,7 @@ export interface OrderSelectContext extends HookContext {
 }
 
 // https://cds-hooks.org/hooks/patient-view/#context
-export interface PatientViewContext extends HookContext {
-
-}
+export type PatientViewContext = HookContext;
 
 // https://cds-hooks.hl7.org/1.0/#calling-a-cds-service
 export interface OrderSignHook extends Hook {
