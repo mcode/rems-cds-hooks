@@ -87,7 +87,7 @@ export interface Coding {
   code: string;
 
   /**
-   * The codesystem for this code.
+   * The system for this code.
    */
   system: string;
 
