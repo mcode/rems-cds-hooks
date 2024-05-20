@@ -3,7 +3,8 @@ import { Bundle, FhirResource, Patient, Practitioner } from 'fhir/r4';
 export enum SupportedHooks {
   ORDER_SIGN = 'order-sign',
   ORDER_SELECT = 'order-select',
-  PATIENT_VIEW = 'patient-view'
+  PATIENT_VIEW = 'patient-view',
+  ENCOUNTER_START = 'encounter-start'
 }
 
 export interface FhirAuthorization {
@@ -41,6 +42,12 @@ export interface PatientViewPrefetch extends HookPrefetch {
   medicationRequests?: Bundle;
 }
 
+export interface EncounterStartPrefetch extends HookPrefetch {
+  practitioner?: Practitioner;
+  patient?: Patient;
+  medicationRequests?: Bundle;
+}
+
 export interface Hook {
   hook: SupportedHooks;
   hookInstance: string;
@@ -64,6 +71,11 @@ export interface OrderSelectContext extends HookContext {
 // https://cds-hooks.org/hooks/patient-view/#context
 export type PatientViewContext = HookContext;
 
+// https://cds-hooks.org/hooks/encounter-start/#context
+export interface EncounterStartContext extends HookContext {
+  encounterId: string;
+}
+
 // https://cds-hooks.hl7.org/1.0/#calling-a-cds-service
 export interface OrderSignHook extends Hook {
   context: OrderSignContext;
@@ -78,6 +90,11 @@ export interface OrderSelectHook extends Hook {
 export interface PatientViewHook extends Hook {
   context: PatientViewContext;
   prefetch?: PatientViewPrefetch;
+}
+
+export interface EncounterStartHook extends Hook {
+  context: EncounterStartContext;
+  prefetch?: EncounterStartPrefetch;
 }
 
 export interface Coding {
