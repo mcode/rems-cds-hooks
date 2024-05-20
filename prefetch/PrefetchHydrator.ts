@@ -59,7 +59,7 @@ function resolveToken(
   return callback(fulfilledToken, { body: hook });
 }
 
-function hydrate(
+async function hydrate(
   callback: (token: string, req: TypedRequestBody) => Promise<any>,
   template: ServicePrefetch,
   hook: Hook
