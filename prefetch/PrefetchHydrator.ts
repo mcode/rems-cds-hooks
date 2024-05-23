@@ -1,6 +1,6 @@
 import { Hook, HookPrefetch, TypedRequestBody } from '../resources/HookTypes';
 import { ServicePrefetch } from '../resources/CdsService';
-import { FhirResource } from 'fhir/r4';
+import { Resource } from 'fhir/r4';
 import { flatten } from 'flat';
 
 function jsonPath(hook: Hook, path: string) {
@@ -45,7 +45,7 @@ function replaceTokens(str: string, json: Hook): string {
 
 function resolveToken(
   token: string,
-  callback: (token: string, req: TypedRequestBody) => Promise<any>,
+  callback: (token: string, req: TypedRequestBody) => Promise<Resource>,
   hook: Hook
 ) {
   const fulfilledToken = replaceTokens(token, hook);
@@ -53,7 +53,7 @@ function resolveToken(
 }
 
 async function hydrate(
-  callback: (token: string, req: TypedRequestBody) => Promise<any>,
+  callback: (token: string, req: TypedRequestBody) => Promise<Resource>,
   template: ServicePrefetch,
   hook: Hook
 ) {
@@ -67,7 +67,7 @@ async function hydrate(
   const promises = Object.keys(template).map(key => {
     if (!Object.prototype.hasOwnProperty.call(prefetch, key)) {
       // prefetch was not fulfilled
-      return resolveToken(template[key], callback, hook).then((data: FhirResource) => {
+      return resolveToken(template[key], callback, hook).then((data: Resource) => {
         Object.assign(prefetch, { [key]: data });
       });
     } else {
