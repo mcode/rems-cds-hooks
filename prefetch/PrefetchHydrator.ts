@@ -1,8 +1,9 @@
 import { Hook, HookPrefetch, TypedRequestBody } from '../resources/HookTypes';
 import { ServicePrefetch } from '../resources/CdsService';
-import { FhirResource } from 'fhir/r4';
+import { Resource } from 'fhir/r4';
+import { flatten } from 'flat';
 
-function jsonPath(json: any, path: string) {
+function jsonPath(hook: Hook, path: string) {
   // Use a regular expression to find array accessors in the form of "[i]"
   const arrayRegex = /\[(\d+)\]/g;
 
@@ -16,17 +17,9 @@ function jsonPath(json: any, path: string) {
     path = path.replace(match[0], `.${index}`);
   }
 
-  // Split the path into its individual components
-  const pathComponents = path.split('.');
-
-  // Use reduce to iterate over the path components and get the corresponding value from the JSON object
-  return pathComponents.reduce((obj, key) => {
-    // If the key doesn't exist, return undefined
-    if (!obj || !Object.prototype.hasOwnProperty.call(obj, key)) return undefined;
-
-    // Otherwise, return the value at the key
-    return obj[key];
-  }, json);
+  // Need to cast, otherwise TypeScript will complain
+  const flattenedHook = flatten(hook) as Record<string, string>;
+  return flattenedHook[path];
 }
 
 function replaceTokens(str: string, json: Hook): string {
@@ -52,15 +45,15 @@ function replaceTokens(str: string, json: Hook): string {
 
 function resolveToken(
   token: string,
-  callback: (token: string, req: TypedRequestBody) => Promise<any>,
+  callback: (token: string, req: TypedRequestBody) => Promise<Resource>,
   hook: Hook
 ) {
   const fulfilledToken = replaceTokens(token, hook);
   return callback(fulfilledToken, { body: hook });
 }
 
-function hydrate(
-  callback: (token: string, req: TypedRequestBody) => Promise<any>,
+async function hydrate(
+  callback: (token: string, req: TypedRequestBody) => Promise<Resource>,
   template: ServicePrefetch,
   hook: Hook
 ) {
@@ -74,7 +67,7 @@ function hydrate(
   const promises = Object.keys(template).map(key => {
     if (!Object.prototype.hasOwnProperty.call(prefetch, key)) {
       // prefetch was not fulfilled
-      return resolveToken(template[key], callback, hook).then((data: FhirResource) => {
+      return resolveToken(template[key], callback, hook).then((data: Resource) => {
         Object.assign(prefetch, { [key]: data });
       });
     } else {
