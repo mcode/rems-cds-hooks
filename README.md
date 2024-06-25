@@ -1,7 +1,7 @@
 # rems-cds-hooks
 This repository is a submodule for the other REMS applications. These applications include:
 
-* [REMS Admin](https://github.com/mcode/rems-admin) - acts as a REMS Adminsitrator responding to CDS Hooks calls
+* [REMS Admin](https://github.com/mcode/rems-admin) - acts as a REMS Administrator responding to CDS Hooks calls
 * [REMS SMART on FHIR App](https://github.com/mcode/rems-smart-on-fhir) - can be used by an EHR system to make CDS Hooks calls to the REMS adminstrator when the EHR does not support CDS Hooks.
 
 The submodule's directories contain the TypeScript bindings needed for CDS Hooks and an implementation of a prefetch mechanism. More information on CDS Hooks can be found [here](https://cds-hooks.org/specification/current/).
