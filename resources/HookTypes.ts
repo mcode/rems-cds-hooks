@@ -1,4 +1,3 @@
-import express from 'express';
 import { Bundle, FhirResource, Patient, Practitioner } from 'fhir/r4';
 
 export enum SupportedHooks {
@@ -315,6 +314,6 @@ export interface Card {
   links?: Link[];
 }
 
-export type TypedRequestBody = Pick<express.Request, 'body'>;
-
-export type TypedResponseBody = express.Response;
+export interface TypedRequestBody {
+  body: Hook;
+}
