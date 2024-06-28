@@ -6,7 +6,7 @@ import Client from 'fhirclient/lib/Client';
 export default class OrderSign extends CdsHook {
   patientId: string;
   userId: string;
-  draftOrders: any;
+  draftOrders: Bundle;
 
   constructor(patientId: string, userId: string, draftOrders: Bundle) {
     super(SupportedHooks.ORDER_SIGN);

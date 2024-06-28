@@ -314,6 +314,6 @@ export interface Card {
   links?: Link[];
 }
 
-export interface TypedRequestBody extends Express.Request {
+export interface TypedRequestBody {
   body: Hook;
 }
