@@ -1,4 +1,6 @@
 import { Bundle, FhirResource, Patient, Practitioner } from 'fhir/r4';
+import { Response } from 'express';
+
 
 export enum SupportedHooks {
   ORDER_SIGN = 'order-sign',
@@ -317,3 +319,6 @@ export interface Card {
 export interface TypedRequestBody extends Express.Request {
   body: Hook;
 }
+
+export type TypedResponseBody = Response;
+
