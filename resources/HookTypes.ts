@@ -315,4 +315,8 @@ export interface Card {
   links?: Link[];
 }
 
+export interface TypedRequestBody extends Express.Request {
+  body: Hook | OrderSelectHook | OrderSignHook | PatientViewHook | EncounterStartHook;
+}
+
 export type TypedResponseBody = Response;
