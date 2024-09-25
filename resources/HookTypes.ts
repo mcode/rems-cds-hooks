@@ -316,7 +316,7 @@ export interface Card {
 }
 
 export interface TypedRequestBody extends Express.Request {
-  body: Hook | OrderSelectHook | OrderSignHook | PatientViewHook | EncounterStartHook;
+  body: any;
 }
 
 export type TypedResponseBody = Response;
