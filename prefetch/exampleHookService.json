@@ -5,6 +5,7 @@
   "description": "REMS Requirement Lookup",
   "prefetch": {
     "patient": "Patient/{{context.patientId}}",
-    "practitioner": "Practitioner/{{context.userId}}"
+    "practitioner": "Practitioner/{{context.userId}}",
+    "pharmacy": "Organization/pharm0111"
   }
 }
